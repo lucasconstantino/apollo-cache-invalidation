@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "build": "babel src -d lib",
-    "lint": "eslint index.js src",
+    "build": "babel index.js -d lib",
+    "lint": "eslint index.js",
     "test": "jest test",
     "prepublish": "npm test && npm run lint && npm run build"
   },
