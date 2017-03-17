@@ -2,13 +2,13 @@
   "name": "apollo-cache",
   "version": "0.0.1",
   "description": "Experimental caching tools for Apollo.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "babel index.js -d lib",
-    "lint": "eslint index.js",
+    "build": "babel src -d lib",
+    "lint": "eslint src",
     "test": "jest test",
     "prepublish": "npm test && npm run lint && npm run build"
   },
