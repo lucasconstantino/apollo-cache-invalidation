@@ -7,7 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest test"
+    "build": "babel src -d lib",
+    "lint": "eslint index.js src",
+    "test": "jest test",
+    "prepublish": "npm test && npm run lint && npm run build"
   },
   "keywords": [
     "apollo",
@@ -15,6 +18,22 @@
     "cache",
     "apollo-client"
   ],
-  "author": "Lucas Constantino Silva",
-  "license": "MIT"
+  "author": "Lucas Constantino Silva <lucasconstantinosilva@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-preset-taller": "^0.1.1",
+    "babel-register": "^6.18.0",
+    "eslint": "^3.10.2",
+    "eslint-config-taller": "^1.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasconstantino/apollo-cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucasconstantino/apollo-cache/issues"
+  },
+  "homepage": "https://github.com/lucasconstantino/apollo-cache#readme"
 }
