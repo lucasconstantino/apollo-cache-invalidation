@@ -1,0 +1,20 @@
+{
+  "name": "apollo-cache",
+  "version": "0.0.0",
+  "description": "Experimental caching tools for Apollo.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest test"
+  },
+  "keywords": [
+    "apollo",
+    "graphql",
+    "cache",
+    "apollo-client"
+  ],
+  "author": "Lucas Constantino Silva",
+  "license": "MIT"
+}
