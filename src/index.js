@@ -91,4 +91,7 @@ export const matchFinder = (data, paths) => {
  */
 export const invalidateFields = generator => (proxy, result) =>
   matchFinder(proxy.data, generator(proxy, result) || [])
-    .forEach(path => del(proxy.data, path))
+    .forEach(path => path.length === 1 && path[0] === ROOT
+      ? Object.keys(proxy.data[ROOT]).forEach(key => del(proxy.data, [ROOT, key]))
+      : del(proxy.data, path)
+    )
