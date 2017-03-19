@@ -40,7 +40,7 @@ const mutation = gql`
 
 // Invalidate happyPeople field on the Root Query. Force it to run again.
 const update = invalidateFields((proxy, result) => [
-  'ROOT_QUERY', 'happyPeople'
+  ['ROOT_QUERY', 'happyPeople']
 ])
 
 client.mutate({ mutation, update, variables: { user: 1 } })
@@ -58,7 +58,7 @@ The first key in a field path will test against either an object id (as resolved
 
 ### Regex matching sample
 
-Imagine you wan't to invalite field *father* for every user after a given mutation. Having a `dataIdFromObject` as such:
+Imagine you wan't to invalidate field *happy* for every user after a given mutation. Having a `dataIdFromObject` as such:
 
 ```js
 // Concatenate "__typename" and "id" field values to find identification.
@@ -73,7 +73,7 @@ const dataIdFromObject = ({ __typename, id }) => {
 you can invalidate a given field on all User type cached object with the following:
 
 ```js
-const update = invalidateFields(() => [[/^User[0-9]+$/, 'father']])
+const update = invalidateFields(() => [[/^User[0-9]+$/, 'happy']])
 
 client.mutate({ mutation, update })
 ```
@@ -86,7 +86,7 @@ Similar to the Regex matching, you can do any customized field matching as so:
 const randomKeyMatch = key => Math.random() >= 0.5
 
 const update = invalidateFields(() => [
-  [randomKeyMatch, 'father']
+  [randomKeyMatch, 'happy']
 ])
 
 client.mutate({ mutation, update })
