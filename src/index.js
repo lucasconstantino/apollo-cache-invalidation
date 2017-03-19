@@ -16,6 +16,16 @@ export const fieldMatch = (key, name, context = {}) => {
 }
 
 /**
+ * Checks if a given traversing node is a reference.
+ *
+ * @param {Object} node Traversing node.
+ * @return {Boolean} wheter or not the node is a reference.
+ */
+const isReference = (node = {}) => Object.keys(node).every(
+  key => ['type', 'id', 'generated'].includes(key)
+) && Object.keys(node).length > 0
+
+/**
  * Find matching paths on a given data object and add new paths
  * to search queue when references are found.
  *
@@ -29,8 +39,15 @@ export const findMatchingPaths = (data, path, addPath) => {
     if (this.isRoot) return matches
     if (!fieldMatch(path[this.level - 1], this.key, this)) return (this.block(), matches)
 
-    const isRef = this.keys && this.keys.every(key => ['type', 'id', 'generated'].includes(key))
-    if (isRef) addPath([this.node.id].concat(path.slice(this.path.length)))
+    // Add reference path.
+    if (isReference(this.node)) {
+      addPath([this.node.id].concat(path.slice(this.path.length)))
+    }
+
+    // Add array of reference paths.
+    if (Array.isArray(this.node) && isReference(this.node[0])) {
+      this.node.forEach(({ id }) => addPath([id].concat(path.slice(this.path.length))))
+    }
 
     // Matched and last.
     if (path.length === this.path.length) matches.push(this.path)

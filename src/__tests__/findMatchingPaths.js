@@ -4,7 +4,11 @@ describe('[method] findMatchingPaths', () => {
   const cached = {
     'ROOT_QUERY': {
       'refField1': { type: 'id', id: 'id1', generated: false },
-      'refField2': { type: 'id', id: 'id2', generated: false }
+      'refField2': { type: 'id', id: 'id2', generated: false },
+      'multiRefField1': [
+        { type: 'id', id: 'id1', generated: false },
+        { type: 'id', id: 'id2', generated: false },
+      ]
     },
     'id1': { 'f1': 'id1 field one value', 'f2': 'id1 field two value' },
     'id2': { 'f1': 'id2 field one value', 'f2': 'id2 field two value' },
@@ -13,6 +17,8 @@ describe('[method] findMatchingPaths', () => {
 
   const addPath = jest.fn()
   const matcher = path => findMatchingPaths(cached, path, addPath)
+
+  beforeEach(() => addPath.mockReset())
 
   it('should match root level keys', () => {
     expect(matcher(['id1'])).toContainEqual(['id1'])
@@ -27,6 +33,12 @@ describe('[method] findMatchingPaths', () => {
 
   it('should add paths on third level keys', () => {
     matcher(['ROOT_QUERY', 'refField2', 'f1'])
+    expect(addPath).toHaveBeenCalledWith(['id2', 'f1'])
+  })
+
+  it('should add paths on third level array of keys', () => {
+    matcher(['ROOT_QUERY', 'multiRefField1', 'f1'])
+    expect(addPath).toHaveBeenCalledWith(['id1', 'f1'])
     expect(addPath).toHaveBeenCalledWith(['id2', 'f1'])
   })
 })
