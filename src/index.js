@@ -16,15 +16,21 @@ export const fieldMatch = (key, name) => {
 }
 
 /**
- * Reducer generator to find matching paths on a given data object.
+ * Find matching paths on a given data object and add new paths
+ * to search queue when references are found.
  *
  * @param {Object} data The data object (i.g. apollo cache store).
+ * @param {Array[String]]} path Key path array.
+ * @param {Function} addPath Method to add paths to queue (used on references).
  * @return {Function} reducer.
  */
-export const findMatchingPaths = data => (result, path) => {
+export const findMatchingPaths = (data, path, addPath) => {
   function findMatches (matches) {
     if (this.isRoot) return matches
     if (!fieldMatch(path[this.level - 1], this.key)) return (this.block(), matches)
+
+    const isRef = this.keys && this.keys.every(key => ['type', 'id', 'generated'].includes(key))
+    if (isRef) addPath([this.node.id].concat(path.slice(this.path.length)))
 
     // Matched and last.
     if (path.length === this.path.length) matches.push(this.path)
@@ -32,7 +38,28 @@ export const findMatchingPaths = data => (result, path) => {
     return matches
   }
 
-  return traverse(data).reduce(findMatches, result)
+  return traverse(data).reduce(findMatches, [])
+}
+
+/**
+ * Given an array of paths, find matching field paths.
+ *
+ * @param {Object} data The data object (i.g. apollo cache store).
+ * @param {Array[Array[String]]} paths Array of paths of keys.
+ * @return {Array} matching field paths.
+ */
+export const matchFinder = (data, paths) => {
+  let i = 0
+  let result = []
+
+  const addPath = path => paths.push(path)
+
+  while (paths[i]) {
+    result = result.concat(findMatchingPaths(data, paths[i], addPath))
+    i++
+  }
+
+  return result
 }
 
 /**
@@ -44,6 +71,5 @@ export const findMatchingPaths = data => (result, path) => {
  * @return {Function} update Update function such as expected by Apollo option.
  */
 export const invalidateFields = generator => (proxy, result) =>
-  (generator(proxy, result) || [])
-    .reduce(findMatchingPaths(proxy.data), [])
+  matchFinder(proxy.data, generator(proxy, result) || [])
     .forEach(path => objectPath.del(proxy.data, path))
