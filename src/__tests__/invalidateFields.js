@@ -64,7 +64,7 @@ describe('[method] invalidateFields', () => {
     expect(proxy).toHaveProperty('data.ROOT_QUERY')
     expect(proxy).toHaveProperty('data.id1.f1')
     invalidator(proxy, {})
-    expect(proxy).not.toHaveProperty('data.ROOT_QUERY')
+    expect(proxy).toHaveProperty('data.ROOT_QUERY', {})
     expect(proxy).not.toHaveProperty('data.id1.f1')
   })
 })
