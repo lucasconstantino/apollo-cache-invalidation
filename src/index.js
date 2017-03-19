@@ -8,10 +8,10 @@ import { del } from 'object-path'
  * @param {String} name The name to compare the key against.
  * @return {Boolean} key/name matches.
  */
-export const fieldMatch = (key, name) => {
+export const fieldMatch = (key, name, context = {}) => {
   if (typeof key === 'string') return key === name
   if (key instanceof RegExp) return !!name.match(key)
-  if (key instanceof Function) return key(name)
+  if (key instanceof Function) return key(name, context)
   return false
 }
 
@@ -27,7 +27,7 @@ export const fieldMatch = (key, name) => {
 export const findMatchingPaths = (data, path, addPath) => {
   function findMatches (matches) {
     if (this.isRoot) return matches
-    if (!fieldMatch(path[this.level - 1], this.key)) return (this.block(), matches)
+    if (!fieldMatch(path[this.level - 1], this.key, this)) return (this.block(), matches)
 
     const isRef = this.keys && this.keys.every(key => ['type', 'id', 'generated'].includes(key))
     if (isRef) addPath([this.node.id].concat(path.slice(this.path.length)))
