@@ -25,7 +25,7 @@ In some cases after a mutation you want to invalidate cache on other queries tha
 ## Usage
 
 ```js
-import { invalidateFields } from 'apollo-cache'
+import { invalidateFields, ROOT } from 'apollo-cache'
 import gql from 'graphql-tag'
 
 import { client } from './client' // Apollo Client instance.
@@ -40,7 +40,7 @@ const mutation = gql`
 
 // Invalidate happyPeople field on the Root Query. Force it to run again.
 const update = invalidateFields((proxy, result) => [
-  ['ROOT_QUERY', 'happyPeople']
+  [ROOT, 'happyPeople']
 ])
 
 client.mutate({ mutation, update, variables: { user: 1 } })
@@ -54,7 +54,7 @@ The function provided to *invalidateFields* will receive a *[DataProxy](http://d
 
 Each path will be compared individually to the whole cached data, invalidating any matched fields (possibly multiple) along the way.
 
-The first key in a field path will test against either an object id (as resolved by the [`dataIdFromObject`](http://dev.apollodata.com/core/apollo-client-api.html#apollo-client) Apollo client config) or the *ROOT_QUERY*.
+The first key in a field path will test against either an object id (as resolved by the [`dataIdFromObject`](http://dev.apollodata.com/core/apollo-client-api.html#apollo-client) Apollo client config) or the *ROOT_QUERY* special key. In that case, you can provide the string `'ROOT_QUERY'`, or better, use the exported `ROOT` constant, as shown above.
 
 ### Regex matching sample
 
@@ -91,3 +91,7 @@ const update = invalidateFields(() => [
 
 client.mutate({ mutation, update })
 ```
+
+## This package should be temporary
+
+I believe something similar to what is accomplished by this package should be soon added to the [Apollo Client](https://github.com/apollographql/apollo-client) core. If someday that happens, this package will either be deprecated or hold other experimental functionality on the subject of caching and invalidation.
