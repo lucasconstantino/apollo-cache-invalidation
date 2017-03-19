@@ -46,13 +46,13 @@ const update = invalidateFields((proxy, result) => [
 client.mutate({ mutation, update, variables: { user: 1 } })
 ```
 
-The function provided to *invalidateFields* will receive a *[DataProxy](http://dev.apollodata.com/core/apollo-client-api.html#DataProxy)* instance and the result for the mutation. It must return an array of field paths to invalidate. Each field path consist of an array of keys. Each key can be one of:
+The function provided to *invalidateFields* will receive a *[DataProxy](http://dev.apollodata.com/core/apollo-client-api.html#DataProxy)* instance and the result for the mutation as arguments. It must then return an array of field paths to invalidate. Each field path consist of an array of keys. Each key can be one of:
 
-- **String:** string equality test;
-- **RegExp:** regex match test;
-- **Function:** custom matching test.
+- **String:** the key to invalidate;
+- **RegExp:** regex to match keys to invalidate;
+- **Function:** custom matching function to match keys to invalidate.
 
-Each path will be compared individually to the whole cached data, invalidating any matched (possibly multiple) along the way.
+Each path will be compared individually to the whole cached data, invalidating any matched fields (possibly multiple) along the way.
 
 The first key in a field path will test against either an object id (as resolved by the [`dataIdFromObject`](http://dev.apollodata.com/core/apollo-client-api.html#apollo-client) Apollo client config) or the *ROOT_QUERY*.
 
