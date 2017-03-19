@@ -1,6 +1,8 @@
 import traverse from 'traverse'
 import { del } from 'object-path'
 
+export const ROOT = 'ROOT_QUERY'
+
 /**
  * Test a field name match against a given key.
  *
