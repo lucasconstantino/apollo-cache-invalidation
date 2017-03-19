@@ -1,5 +1,5 @@
 import traverse from 'traverse'
-import objectPath from 'object-path'
+import { del } from 'object-path'
 
 /**
  * Test a field name match against a given key.
@@ -72,4 +72,4 @@ export const matchFinder = (data, paths) => {
  */
 export const invalidateFields = generator => (proxy, result) =>
   matchFinder(proxy.data, generator(proxy, result) || [])
-    .forEach(path => objectPath.del(proxy.data, path))
+    .forEach(path => del(proxy.data, path))
