@@ -12,21 +12,21 @@ describe('[method] findMatchingPaths', () => {
   }
 
   const addPath = jest.fn()
-  const matcher = findMatchingPaths(cached, addPath)
+  const matcher = path => findMatchingPaths(cached, path, addPath)
 
   it('should match root level keys', () => {
-    expect(matcher([], ['id1'])).toContainEqual(['id1'])
-    expect(matcher([], ['ROOT_QUERY'])).toContainEqual(['ROOT_QUERY'])
-    expect(matcher([], ['wrong-id']).length).toBe(0)
+    expect(matcher(['id1'])).toContainEqual(['id1'])
+    expect(matcher(['ROOT_QUERY'])).toContainEqual(['ROOT_QUERY'])
+    expect(matcher(['wrong-id']).length).toBe(0)
   })
 
   it('should match second level keys', () => {
-    expect(matcher([], ['ROOT_QUERY', 'refField1'])).toContainEqual(['ROOT_QUERY', 'refField1'])
-    expect(matcher([], ['ROOT_QUERY', 'wrong-field']).length).toBe(0)
+    expect(matcher(['ROOT_QUERY', 'refField1'])).toContainEqual(['ROOT_QUERY', 'refField1'])
+    expect(matcher(['ROOT_QUERY', 'wrong-field']).length).toBe(0)
   })
 
   it('should add paths on third level keys', () => {
-    matcher([], ['ROOT_QUERY', 'refField2', 'f1'])
+    matcher(['ROOT_QUERY', 'refField2', 'f1'])
     expect(addPath).toHaveBeenCalledWith(['id2', 'f1'])
   })
 })
