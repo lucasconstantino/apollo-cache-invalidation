@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rm -Rf lib",
     "build": "npm run clean && babel src -d lib",
-    "lint": "eslint src",
+    "lint": "eslint src tests",
     "test": "jest",
     "prepush": "npm run lint && npm run test",
     "prepublish": "npm run lint && npm run test && npm run build"
