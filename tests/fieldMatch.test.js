@@ -1,4 +1,4 @@
-import { fieldMatch } from 'apollo-cache'
+import { fieldMatch } from 'apollo-cache-invalidation'
 
 describe('[method] fieldMatch', () => {
   it('should match against string keys', () => {

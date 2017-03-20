@@ -1,4 +1,4 @@
-import { findMatchingPaths } from 'apollo-cache'
+import { findMatchingPaths } from 'apollo-cache-invalidation'
 
 describe('[method] findMatchingPaths', () => {
   const cached = {

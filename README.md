@@ -1,16 +1,16 @@
-# Apollo Cache
+# Apollo Cache Invalidation
 
 A library to simplify cache invalidation for [Apollo clients](https://github.com/apollographql/apollo-client).
 
-![Build status](https://travis-ci.org/lucasconstantino/apollo-cache.svg?branch=master)
+![Build status](https://travis-ci.org/lucasconstantino/apollo-cache-invalidation.svg?branch=master)
 
 ## Installation
 
 ```
-yarn add apollo-cache
+yarn add apollo-cache-invalidation
 ```
 
-> Or `npm install --save apollo-cache`, if you are still in the old days.
+> Or `npm install --save apollo-cache-invalidation`, if you are still in the old days.
 
 ## Motivation
 
@@ -18,14 +18,14 @@ Cache control - and most of invalidation - is still a [discussing issue](https:/
 
 ## How does it work
 
-This project exposes *invalidateFields*: a higher-order [`mutate.options.update`](http://dev.apollodata.com/react/api.html#graphql-mutation-options.update) implementation specialized in invalidating cache based on field paths.
+This project exposes *invalidateFields*: a generator for a [`mutate.options.update`](http://dev.apollodata.com/react/api.html#graphql-mutation-options.update) implementation specialized in invalidating cache based on field paths.
 
 In some cases after a mutation you want to invalidate cache on other queries that might have become outdated, but you can't really update their results from the data provided by the mutation. The *refetchQueries* is often the tool of choice, but it allows no deep field invalidation, meaning you'll have to invalidate the exact and very specific performed queries. *invalidateFields* is an alternative.
 
 ## Usage
 
 ```js
-import { invalidateFields, ROOT } from 'apollo-cache'
+import { invalidateFields, ROOT } from 'apollo-cache-invalidation'
 import gql from 'graphql-tag'
 
 import { client } from './client' // Apollo Client instance.

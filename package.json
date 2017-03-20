@@ -1,5 +1,5 @@
 {
-  "name": "apollo-cache",
+  "name": "apollo-cache-invalidation",
   "version": "0.0.3",
   "description": "Experimental caching tools for Apollo.",
   "main": "lib/index.js",
@@ -36,19 +36,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasconstantino/apollo-cache.git"
+    "url": "git+https://github.com/lucasconstantino/apollo-cache-invalidation.git"
   },
   "bugs": {
-    "url": "https://github.com/lucasconstantino/apollo-cache/issues"
+    "url": "https://github.com/lucasconstantino/apollo-cache-invalidation/issues"
   },
-  "homepage": "https://github.com/lucasconstantino/apollo-cache#readme",
+  "homepage": "https://github.com/lucasconstantino/apollo-cache-invalidation#readme",
   "dependencies": {
     "object-path": "^0.11.4",
     "traverse": "^0.6.6"
   },
   "jest": {
     "moduleNameMapper": {
-      "apollo-cache": "<rootDir>/src"
+      "apollo-cache-invalidation": "<rootDir>/src"
     }
   }
 }

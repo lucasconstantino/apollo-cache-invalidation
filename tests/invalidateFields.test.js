@@ -1,4 +1,4 @@
-import { invalidateFields } from 'apollo-cache'
+import { invalidateFields } from 'apollo-cache-invalidation'
 
 const getProxyObject = () => ({
   data: {

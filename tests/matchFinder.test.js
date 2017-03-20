@@ -1,4 +1,4 @@
-import { matchFinder } from 'apollo-cache'
+import { matchFinder } from 'apollo-cache-invalidation'
 
 describe('[method] matchFinder', () => {
   const cached = {
