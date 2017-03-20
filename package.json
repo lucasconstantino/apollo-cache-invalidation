@@ -10,7 +10,7 @@
     "clean": "rm -Rf lib",
     "build": "npm run clean && babel src -d lib",
     "lint": "eslint src",
-    "test": "jest test",
+    "test": "jest",
     "prepublish": "npm test && npm run lint && npm run build"
   },
   "keywords": [
@@ -43,5 +43,10 @@
   "dependencies": {
     "object-path": "^0.11.4",
     "traverse": "^0.6.6"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "apollo-cache": "<rootDir>/src"
+    }
   }
 }
