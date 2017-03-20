@@ -1,4 +1,4 @@
-import { matchFinder } from '../index'
+import { matchFinder } from 'apollo-cache'
 
 describe('[method] matchFinder', () => {
   const cached = {

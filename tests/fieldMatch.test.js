@@ -1,4 +1,4 @@
-import { fieldMatch } from '../index'
+import { fieldMatch } from 'apollo-cache'
 
 describe('[method] fieldMatch', () => {
   it('should match against string keys', () => {

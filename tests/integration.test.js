@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-client'
 import gql from 'graphql-tag'
 
-import { invalidateFields } from '../index'
+import { invalidateFields } from 'apollo-cache'
 
 const dataIdFromObject = ({ __typename, id }) =>
   !id || !__typename ? null : __typename + id
