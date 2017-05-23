@@ -22,6 +22,10 @@ This project exposes *invalidateFields*: a generator for a [`mutate.options.upda
 
 In some cases after a mutation you want to invalidate cache on other queries that might have become outdated, but you can't really update their results from the data provided by the mutation. The *refetchQueries* is often the tool of choice, but it allows no deep field invalidation, meaning you'll have to invalidate the exact and very specific performed queries. *invalidateFields* is an alternative.
 
+In a nutshell it helps delete recent apollo queries (or just apollo data) from the apollo redux store:
+![image](https://cloud.githubusercontent.com/assets/2730609/26370422/9344ad8c-3fac-11e7-98ac-68684e50e3e2.png)
+
+
 ## Usage
 
 ```js
@@ -40,7 +44,7 @@ const mutation = gql`
 
 // Invalidate happyPeople field on the Root Query. Force it to run again.
 const update = invalidateFields((proxy, result) => [
-  [ROOT, 'happyPeople']
+  [ROOT, 'happyPeople'] //or more often, use a regex like /^happyPeople/
 ])
 
 client.mutate({ mutation, update, variables: { user: 1 } })
