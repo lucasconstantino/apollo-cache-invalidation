@@ -23,7 +23,7 @@ export const fieldMatch = (key, name, context = {}) => {
  * @param {Object} node Traversing node.
  * @return {Boolean} wheter or not the node is a reference.
  */
-const isReference = (node = {}) => Object.keys(node).every(
+const isReference = (node = {}) => node && Object.keys(node).every(
   key => ['type', 'id', 'generated'].includes(key)
 ) && Object.keys(node).length > 0
 
