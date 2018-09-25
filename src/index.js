@@ -89,9 +89,19 @@ export const matchFinder = (data, paths) => {
  *                             an array of invalidating field paths.
  * @return {Function} update Update function such as expected by Apollo option.
  */
-export const invalidateFields = generator => (proxy, result) =>
-  matchFinder(proxy.data, generator(proxy, result) || [])
+export const invalidateFields = generator => (proxy, result) => {
+  // This relies on a couple of implementation details of apollo-cache-inmemory,
+  // namely that `proxy` will actually be the cache itself and its `data` property
+  // will be an instance of the internal class `ObjectCache`.
+  // These are not guaranteed by the public API and so invalidateFields could break without
+  // warning
+  const objectCacheData = proxy.data && proxy.data.data
+  if (!objectCacheData) {
+    throw new Error('`invalidateFields` is only known to work with apollo-cache-inmemory and the default `storeFactory`.')
+  }
+  matchFinder(objectCacheData, generator(proxy, result) || [])
     .forEach(path => path.length === 1 && path[0] === ROOT
-      ? Object.keys(proxy.data[ROOT]).forEach(key => del(proxy.data, [ROOT, key]))
-      : del(proxy.data, path)
+      ? Object.keys(objectCacheData[ROOT]).forEach(key => del(objectCacheData, [ROOT, key]))
+      : del(objectCacheData, path)
     )
+}
