@@ -19,7 +19,7 @@ Cache control - and most of invalidation - is still a [discussing issue](https:/
 
 ## How does it work
 
-This project exposes *invalidateFields*: a generator for a [`mutate.options.update`](http://dev.apollodata.com/react/api.html#graphql-mutation-options.update) implementation specialized in invalidating cache based on field paths.
+This project exposes *invalidateFields*: a generator for a mutation [`update function`](https://www.apollographql.com/docs/react/advanced/caching.html#after-mutations) implementation specialized in invalidating cache based on field paths.
 
 In some cases after a mutation you want to invalidate cache on other queries that might have become outdated, but you can't really update their results from the data provided by the mutation. The *refetchQueries* is often the tool of choice, but it allows no deep field invalidation, meaning you'll have to invalidate the exact and very specific performed queries. *invalidateFields* is an alternative.
 
