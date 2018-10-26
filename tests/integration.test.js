@@ -1,4 +1,6 @@
 import ApolloClient from 'apollo-client'
+import { ApolloLink, Observable } from 'apollo-link'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 
 import { invalidateFields } from 'apollo-cache-invalidation'
@@ -6,10 +8,22 @@ import { invalidateFields } from 'apollo-cache-invalidation'
 const dataIdFromObject = ({ __typename, id }) =>
   !id || !__typename ? null : __typename + id
 
+const mockLink = resolver => new ApolloLink((operation, forward) => {
+  const resultPromise = resolver(operation)
+  return new Observable(observer => resultPromise.then(result => {
+    observer.next(result)
+    observer.complete()
+    return result
+  }, err => {
+    observer.error(err)
+  }))
+})
+
 const mockedClient = query => new ApolloClient({
   ssrMode: true,
   dataIdFromObject,
-  networkInterface: { query },
+  cache: new InMemoryCache(),
+  link: mockLink(query),
 })
 
 /*
