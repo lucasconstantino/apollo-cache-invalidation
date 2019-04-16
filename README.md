@@ -3,7 +3,7 @@
 A library to simplify cache invalidation for [Apollo clients](https://github.com/apollographql/apollo-client).
 
 ![Build status](https://travis-ci.org/lucasconstantino/apollo-cache-invalidation.svg?branch=master)
-[![sponsored by Taller](https://raw.githubusercontent.com/TallerWebSolutions/tallerwebsolutions.github.io/master/sponsored-by-taller.png)](https://taller.net.br/en/)
+[![sponsored by Taller](https://raw.githubusercontent.com/TallerWebSolutions/tallerwebsolutions.github.io/master/sponsored-by-taller.png)](https://taller.net.br/en/) [![Greenkeeper badge](https://badges.greenkeeper.io/lucasconstantino/apollo-cache-invalidation.svg)](https://greenkeeper.io/)
 
 ## Installation
 
